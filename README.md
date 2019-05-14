@@ -1,6 +1,6 @@
 # Kuhn-CSSvars
 
-Kuhn-CSSvars is a forked refactoring of [Morten Rand-Hendriksen](https://mor10.com)'s Kuhn WordPress theme [github.com/mor10/kuhn](https://github.com/mor10/kuhn). (The mission of Kuhn is to show what CSS Grid can do for WordPress theme layouts.)
+Kuhn-CSSvars is a forked refactoring of [Morten Rand-Hendriksen](https://mor10.com)'s Kuhn WordPress theme ([github.com/mor10/kuhn](https://github.com/mor10/kuhn)), which you can observe live in action at his [MOR10: Thinking Out Load About the Internet](https://mor10.com). (The mission of Kuhn is to show what CSS Grid can do for WordPress theme layouts.)
 
 ## Mission
 The mission of this refactoring is to illustrate how an existing theme using Sass variables can be refactored using CSS variables in order to make customization of the theme easier for either (a) a child-theme developer or (b) a WordPress admin using a custom-CSS plugin.
