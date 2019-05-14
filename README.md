@@ -58,7 +58,7 @@ Now, after compilation, the corresponding CSS in `style.css` that relates to the
 ```
 Note that the CSS-variable name `--color__background-button` *has* survived into the site's `style.css` file.
 
-As a result of the refactoring, the downstream user could easily change the button background color by the rule:
+Thus, as a result of the refactoring, the downstream user could easily change the button background color by the rule:
 ```
 :root {
     --color__background-button: magenta;
