@@ -38,15 +38,17 @@ When the Sass code is compiled into a `style.css` file, every button specificati
     background-color: #e6e6e6;
 }
 ```
-In the refactored code, `$color__background-button: #e6e6e6;` would be replaced by:
+In the refactored Sass code, `$color__background-button: #e6e6e6;` would be replaced by:
 ```
 --color__background-button: #e6e6e6;
 $color__background-button: var(--color__background-button);
 ```
 where (a) the first line defines the CSS variable `--color__background-button` and assigns the color to it and (b) the second line assigns to the Sass variable the CSS variable.
 
-Now, after compilation, the corresponding button specifications in `style.css` would look like:
+Now, after compilation, the corresponding CSS in `style.css` that relates to the button specification would look like:
 ```
+--color__background-button: #e6e6e6;
+︙    ︙    ︙    ︙    ︙    ︙    ︙
 .button {
     background-color: var(--color__background-button);
 }
@@ -57,6 +59,16 @@ As a result of the refactoring, the downstream user could easily change the butt
 ```
 :root {
     --color__background-button: magenta;
+}
+```
+either through (a) insertion as additional CSS in the admin panel (e.g., Dashboard » Customize » Additional CSS or using a custom-CSS plugin) or (b) specification in a child theme.
+
+This custom-CSS rule overrides the Sass-specified rule and thus redefines the value of `--color__background-button`, so that the resulting CSS that controls the rendering of a button is effectively:
+```
+--color__background-button: magenta;
+︙    ︙    ︙    ︙    ︙    ︙    ︙
+.button {
+    background-color: var(--color__background-button);
 }
 ```
 
