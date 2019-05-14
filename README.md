@@ -1,9 +1,9 @@
 # Kuhn-CSSvars
 
-Kuhn-CSSvars is a forked refactoring of [Morten Rand-Hendriksen](https://mor10.com)'s Kuhn WordPress theme ([github.com/mor10/kuhn](https://github.com/mor10/kuhn)), which you can observe live in action at his [MOR10: Thinking Out Load About the Internet](https://mor10.com). (The mission of Kuhn is to show what CSS Grid can do for WordPress theme layouts.)
+Kuhn-CSSvars is a forked refactoring of [Morten Rand-Hendriksen](https://mor10.com)'s Kuhn WordPress theme ([github.com/mor10/kuhn](https://github.com/mor10/kuhn)), which you can observe live in action at his [MOR10: Thinking Out Load About the Internet](https://mor10.com) blog. (The mission of Kuhn is to show what CSS Grid can do for WordPress theme layouts.)
 
 ## Mission
-The mission of this refactoring is to illustrate how an existing theme using Sass variables can be refactored using CSS variables in order to make customization of the theme easier for either (a) a child-theme developer or (b) a WordPress admin using a custom-CSS plugin.
+The mission of this refactoring is to illustrate how an existing theme using *Sass* variables can be refactored by adding corresponding *CSS* variables in order to make customization of the theme easier for (a) a child-theme developers and (b) WordPress admins using custom CSS.
 
 ## Problem addressed
 Sass variables aid a theme developer by allowing her to, for example, specify something (e.g., the value of a `font-size` property) once and reference it multiple times in her Sass code. In particular, this makes changes easier for the *theme developer*, who can just change the definition of a Sass variable and recompile in order to have the corresponding changes propagate through her code.
@@ -11,22 +11,23 @@ Sass variables aid a theme developer by allowing her to, for example, specify so
 However, by the time a downstream consumer of the theme, e.g., a child-theme developer or a WordPress admin, receives the theme, the Sass variables have been compiled away, leaving `style.css` populated with the *values* of the variables, rather than the variables themselves. Thus a downstream consumer can't herself benefit from the ease of making site-wide changes that the theme developer enjoyed through the use of Sass variables.
 
 The downstream consumer wanting to customize the theme for her child theme or website is faced with either of two unpleasant/undesirable options when, for example, she wants to change site-wide the value of a CSS property (e.g., the value of a `font-size` property):
-- Try to target each occurrence where this property occurs in custom CSS specified via a custom-CSS plugin
+- Use custom CSS to try to target each occurrence where this property occurs
   - This could require many additional CSS rules because selectors would have to account for possibly many combinations of elements, IDs, classes, and pseudo-classes implicated by the many locations in which the Sass variable assigned the value for this property
   - This would often require a lot of work and a lot of CSS sophistication to make sure that the newly specified CSS rules have sufficient specificity to override the rules in the parent theme.
-- Make modifications to the parent theme itself. This is undesirable because:
-  - It requires not just CSS knowledge but the sophistication and infrastructure to be able to recompile Sass code
-  - Modifying the parent theme makes updating the parent theme more problematic, because you would overwrite your modifications.
+- Make modifications to the parent theme's Sass files themselves. This is undesirable or even infeasible because:
+  - The end user might not even have access to the parent theme's Sass files but instead only the compiled `style.css` file. (This appears to be often the case with commercial themes.)
+  - Even if one has access to the Sass files, modifying them requires not just CSS knowledge but the sophistication and infrastructure to be able to recompile Sass code
+  - Even if one has access to the Sass files and knows how to recompile them, modifying the parent theme makes updating the parent theme more problematic, because doing so would overwrite your modifications.
 
 ## Solution
 An existing theme that uses Sass variables can be fairly easily refactored to make customization of the theme much easier for a child-theme developer or a WordPress admin by creating a corresponding CSS variable for each Sass variable. The CSS variable will *not* be compiled away and will instead survive into the `style.css` file, making its overriding much easier.
 
 Specifically:
-1. For each eligible Sass variable that specifies a property value, define a corresponding CSS variable
-2. Assign to the new CSS variable the value that was originally assigned to the Sass variable
+1. For each eligible Sass variable (see § "Limitations" below), define a corresponding CSS variable
+2. Assign to the new CSS variable the property value that was originally assigned to the Sass variable
 3. Rewrite the definition of the Sass variable by assigning to it the CSS variable
 
-For example, suppose the following in `style.scss` (i.e., in the Sass code):
+For example, suppose the following Sass-variable-assignment statement in `style.scss` (i.e., in the Sass code):
 ```
 $color__background-button: #e6e6e6;
 ```
@@ -38,7 +39,9 @@ When the Sass code is compiled into a `style.css` file, every button specificati
     background-color: #e6e6e6;
 }
 ```
-In the refactored Sass code, `$color__background-button: #e6e6e6;` would be replaced by:
+In particular, note that the Sass-variable name `$color__background-button` does *not* appear in `style.css`.
+
+To refactor this Sass code in order to make it easier for a downstream user to customize, replace the `$color__background-button: #e6e6e6;` statement by the pair of statements:
 ```
 --color__background-button: #e6e6e6;
 $color__background-button: var(--color__background-button);
@@ -53,7 +56,7 @@ Now, after compilation, the corresponding CSS in `style.css` that relates to the
     background-color: var(--color__background-button);
 }
 ```
-Note that the CSS variable `--color__background-button` has survived into the site's `style.css` file.
+Note that the CSS-variable name `--color__background-button` *has* survived into the site's `style.css` file.
 
 As a result of the refactoring, the downstream user could easily change the button background color by the rule:
 ```
@@ -61,7 +64,7 @@ As a result of the refactoring, the downstream user could easily change the butt
     --color__background-button: magenta;
 }
 ```
-either through (a) insertion as additional CSS in the admin panel (e.g., Dashboard » Customize » Additional CSS or using a custom-CSS plugin) or (b) specification in a child theme.
+either through (a) insertion as additional CSS in the admin panel (e.g., Dashboard » Appearance » Customize » Additional CSS or using a custom-CSS plugin) or (b) specification in a child theme.
 
 This custom-CSS rule overrides the Sass-specified rule and thus redefines the value of `--color__background-button`, so that the resulting CSS that controls the rendering of a button is effectively:
 ```
@@ -89,7 +92,7 @@ See [How the refactoring was performed](https://github.com/jimratliff/kuhn-cssva
 ## Usage
 See the [wiki](https://github.com/jimratliff/kuhn-cssvars/wiki) for this repository, and specifically:
 - [The correspondence between new CSS variables and original Sass variables](https://github.com/jimratliff/kuhn-cssvars/wiki/The-correspondence-between-new-CSS-variables-and-original-Sass-variables) for a table listing (a) the original Sass variable name, (b) the corresponding CSS variable name, and (c) the default value associated with each Sass and/or CSS variable name.
-- [Example custom CSS to change the formatting by assigning values to the CSS variable](https://github.com/jimratliff/kuhn-cssvars/wiki/Example-custom-CSS-to-change-the-formatting-by-assigning-values-to-the-CSS-variable/_edit) for an example of how to enter assignments of CSS variables in the custom-CSS field in the Admin panel or other custom-CSS plugin.
+- [Example custom CSS to change the formatting by assigning values to the CSS variable](https://github.com/jimratliff/kuhn-cssvars/wiki/Example-custom-CSS-to-change-the-formatting-by-assigning-values-to-the-CSS-variable) for an example of how to enter assignments of CSS variables in the custom-CSS field in the Admin panel or other custom-CSS plugin.
 
 
 ## Licenses and External Assets
