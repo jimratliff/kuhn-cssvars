@@ -71,6 +71,9 @@ In particular, you cannot use `var(--somecssvariable)`
 
 (See Lea Verou, "[CSS Variables: `var(--subtitle)`,](https://www.youtube.com/watch?v=2an6-WVPuJU)" YouTube, October 5, 2016, starting at 2:23 and later at 8:05.)
 
+## Implementation
+See [How the refactoring was performed](https://github.com/jimratliff/kuhn-cssvars/wiki/How-the-refactoring-was-performed) for the steps involved in the refactoring, including a full recounting of all changed code.
+
 ## Usage
 See the [wiki](https://github.com/jimratliff/kuhn-cssvars/wiki) for this repository, and specifically:
 - [The correspondence between new CSS variables and original Sass variables](https://github.com/jimratliff/kuhn-cssvars/wiki/The-correspondence-between-new-CSS-variables-and-original-Sass-variables) for a table listing (a) the original Sass variable name, (b) the corresponding CSS variable name, and (c) the value associated with each Sass and/or CSS variable name.
