@@ -25,7 +25,7 @@ An existing theme that uses Sass variables can be fairly easily refactored to ma
 Specifically:
 1. For each eligible Sass variable (see § "Limitations" below), define a corresponding CSS variable
 2. Assign to the new CSS variable the property value that was originally assigned to the Sass variable
-3. Rewrite the definition of the Sass variable by assigning to it the CSS variable
+3. Rewrite the definition of the Sass variable by assigning to it the CSS variable.
 
 For example, suppose the following Sass-variable-assignment statement in `style.scss` (i.e., in the Sass code):
 ```
@@ -82,7 +82,7 @@ In particular, you cannot use `var(--somecssvariable)`
 - to represent a selector
 - to represent a property *name* (representing a property *value* is fine)
 - in the query part of a `@media` query; e.g., `@media ( min-width: var ( -- break-point-value))` does *not* work
-- as an argument to the `url` function
+- as an argument to the `url` function.
 
 (See Lea Verou, "[CSS Variables: `var(--subtitle)`,](https://www.youtube.com/watch?v=2an6-WVPuJU)" YouTube, October 5, 2016, starting at 2:23 and later at 8:05.)
 
