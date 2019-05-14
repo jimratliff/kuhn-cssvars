@@ -24,7 +24,7 @@ An existing theme that uses Sass variables can be fairly easily refactored to ma
 Specifically:
 1. For each eligible Sass variable that specifies a property value, define a corresponding CSS variable
 2. Assign to the new CSS variable the value that was originally assigned to the Sass variable
-3. Rewrite the definition of the Sass variable by assigning to it the value of the CSS variable
+3. Rewrite the definition of the Sass variable by assigning to it the CSS variable
 
 For example, suppose the following in `style.scss` (i.e., in the Sass code):
 ```
@@ -43,7 +43,7 @@ In the refactored code, `$color__background-button: #e6e6e6;` would be replaced 
 --color__background-button: #e6e6e6;
 $color__background-button: var(--color__background-button);
 ```
-where (a) the first line defines the CSS variable `--color__background-button` and assigns the color to it and (b) the second line assigns to the Sass variable the value of the CSS variable.
+where (a) the first line defines the CSS variable `--color__background-button` and assigns the color to it and (b) the second line assigns to the Sass variable the CSS variable.
 
 Now, after compilation, the corresponding button specifications in `style.css` would look like:
 ```
@@ -51,7 +51,7 @@ Now, after compilation, the corresponding button specifications in `style.css` w
     background-color: var(--color__background-button);
 }
 ```
-Note the the CSS variable `--color__background-button` has survived into the site's `style.css` file.
+Note that the CSS variable `--color__background-button` has survived into the site's `style.css` file.
 
 As a result of the refactoring, the downstream user could easily change the button background color by the rule:
 ```
@@ -76,7 +76,7 @@ See [How the refactoring was performed](https://github.com/jimratliff/kuhn-cssva
 
 ## Usage
 See the [wiki](https://github.com/jimratliff/kuhn-cssvars/wiki) for this repository, and specifically:
-- [The correspondence between new CSS variables and original Sass variables](https://github.com/jimratliff/kuhn-cssvars/wiki/The-correspondence-between-new-CSS-variables-and-original-Sass-variables) for a table listing (a) the original Sass variable name, (b) the corresponding CSS variable name, and (c) the value associated with each Sass and/or CSS variable name.
+- [The correspondence between new CSS variables and original Sass variables](https://github.com/jimratliff/kuhn-cssvars/wiki/The-correspondence-between-new-CSS-variables-and-original-Sass-variables) for a table listing (a) the original Sass variable name, (b) the corresponding CSS variable name, and (c) the default value associated with each Sass and/or CSS variable name.
 - [Example custom CSS to change the formatting by assigning values to the CSS variable](https://github.com/jimratliff/kuhn-cssvars/wiki/Example-custom-CSS-to-change-the-formatting-by-assigning-values-to-the-CSS-variable/_edit) for an example of how to enter assignments of CSS variables in the custom-CSS field in the Admin panel or other custom-CSS plugin.
 
 
